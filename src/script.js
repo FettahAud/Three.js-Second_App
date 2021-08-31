@@ -2,6 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
+import { Scene } from 'three'
 /**
  * Base
  */
@@ -48,10 +49,22 @@ loader.load(
         const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
         const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45)
         const sphereGeometry = new THREE.SphereGeometry(1, 32, 16)
+        for (let i = 0; i < 250; i++) {
+            const sphere = new THREE.Mesh(sphereGeometry, material)
+            sphere.position.x = (Math.random() - .5) * 50
+            sphere.position.y = (Math.random() - .5) * 50
+            sphere.position.z = (Math.random() - .5) * 50
+
+            sphere.rotation.x = Math.random() * Math.PI
+            sphere.rotation.y = Math.random() * Math.PI
+
+            const scale = Math.random()
+            sphere.scale.set(scale, scale, scale)
+            scene.add(sphere)
+        }
         for (let i = 0; i < 500; i++) {
             const donut = new THREE.Mesh(donutGeometry, material)
             const box = new THREE.Mesh(boxGeometry, material)
-            const sphere = new THREE.Mesh(sphereGeometry, material)
 
             donut.position.x = (Math.random() - .5) * 50
             donut.position.y = (Math.random() - .5) * 50
@@ -61,10 +74,6 @@ loader.load(
             box.position.y = (Math.random() - .5) * 50
             box.position.z = (Math.random() - .5) * 50
 
-            sphere.position.x = (Math.random() - .5) * 50
-            sphere.position.y = (Math.random() - .5) * 50
-            sphere.position.z = (Math.random() - .5) * 50
-
             donut.rotation.x = Math.random() * Math.PI
             donut.rotation.y = Math.random() * Math.PI
 
@@ -72,15 +81,12 @@ loader.load(
             box.rotation.x = Math.random() * Math.PI
             box.rotation.y = Math.random() * Math.PI
 
-            sphere.rotation.x = Math.random() * Math.PI
-            sphere.rotation.y = Math.random() * Math.PI
 
             const scale = Math.random()
             donut.scale.set(scale, scale, scale)
             box.scale.set(scale, scale, scale)
-            sphere.scale.set(scale, scale, scale)
 
-            scene.add(donut, box, sphere)
+            scene.add(donut, box)
         }
     }
 )
